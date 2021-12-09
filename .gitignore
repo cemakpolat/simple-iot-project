@@ -1,0 +1,5 @@
+workspace.code-workspace
+bin/
+obj/
+*/bin/
+*/obj/
