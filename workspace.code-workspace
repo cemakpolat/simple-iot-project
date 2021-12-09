@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "publisher"
+		},
+		{
+			"path": "datastore"
+		},
+		{
+			"path": "ui/angular-mqtt"
+		},
+		{
+			"path": "medium-crud-api-mongodb/CrudAPI"
+		},
+		{
+			"path": "AspNetCoreMongoDb"
+		},
+		{
+			"path": "subscriber"
+		}
+	],
+	"settings": {}
+}
