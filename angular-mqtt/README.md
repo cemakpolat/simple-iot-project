@@ -13,6 +13,8 @@ https://docs.docker.com/samples/dotnetcore/
 
 # Frontend
 
+https://github.com/ngodup/angular-chartjs/tree/main/src/app
+
 https://www.chartjs.org/docs/latest/
 https://github.com/anantl05/angular-mqtt
 https://medium.com/@anant.lalchandani/dead-simple-mqtt-example-over-websockets-in-angular-b9fd5ff17b8e
