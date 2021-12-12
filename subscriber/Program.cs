@@ -14,6 +14,7 @@ using System.Collections.Generic;
 
 namespace subscriber
 {   
+      
       public class Property  {
         public String objectType { get; set; }
 
