@@ -44,9 +44,7 @@ namespace DataStore.Services
             bool exist  = _collection.Find(t => t.uuid == entity.uuid).Any();
 
             Console.WriteLine(exist);
-            
-            // get entity
-            // go over all properties
+
             if (exist){
                 List<Property> list = entity.properties;
                 foreach(Property prop in list){

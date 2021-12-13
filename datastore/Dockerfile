@@ -13,5 +13,5 @@ RUN dotnet publish -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
 COPY --from=publish /app/publish .
-
+EXPOSE 5000
 ENTRYPOINT ["dotnet", "datastore.dll"]

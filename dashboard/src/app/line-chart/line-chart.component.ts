@@ -17,13 +17,14 @@ export class LineChartComponent implements AfterViewInit {
   constructor() {}
 
   updateChartData(tuple:any) {  
-    console.log("tuple",this.data, this.labels);
-      if (this.data.length > 200){
+    // console.log("tuple",this.data, this.labels);
+      if (this.data.length > 50){
         this.data.shift();
         this.labels.shift();
       }
-
-      this.labels.push(tuple.x);
+      let ts = new Date(tuple.x).toISOString().substr(11, 8)
+      console.log("ts",ts);
+      this.labels.push(ts);
       this.data.push(tuple.y)  
 
       this.chart.update();

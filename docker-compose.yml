@@ -1,12 +1,8 @@
 version: '3.4'
 
 services:
-
   broker:
     image: toke/mosquitto
-    # build:
-    #   context: ./mqtt-broker/
-    #   dockerfile: Dockerfile
     ports:
       - 1883:1883
       - 8883:8883
@@ -25,26 +21,52 @@ services:
       - ./mongo-settings/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   datastore:
-    network_mode: "host"
     image: datastore
     build:
       context: ./datastore/
       dockerfile: Dockerfile
-    # ports:
-    #   - 40003:8080
+    ports:
+      - 5003:5000
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=universe
+      - MONGO_INITDB_DATABASE=iotworld
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
     depends_on:
       - mongodb
       - broker
   
   sensor:
-    image: iot-sensor
+    image: iotsensor
     build:
-      context: ./publisher/
+      context: ./iotsensor/
       dockerfile: Dockerfile
     depends_on:
-      - mongodb
+      - broker
+  
+  iotservice:
+    image: iotservice
+    build:
+      context: ./iotservice/
+      dockerfile: Dockerfile
+    depends_on:
       - broker
 
-  
-
+  web:
+    image: dashboard
+    build:
+      context: ./dashboard/
+      dockerfile: Dockerfile
+    depends_on:
+      - broker
+    ports:
+      - 4200:80
+  # pmengine:
+  #   image: pmengine
+  #   build:
+  #     context: ./pm-engine/
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - broker
  

@@ -35,3 +35,6 @@ dotnet add package MQTTnet --version 3.1.1
 docker run -ti -p 127.0.0.1:1883:1883 -p 9001:9001  toke/mosquitto
 
 https://github.com/chkr1011/MQTTnet/blob/master/Tests/MQTTnet.Core.Tests/Client/MqttClient_Tests.cs
+
+# Dockerize Angular App
+https://www.section.io/engineering-education/containerizing-an-angular-app-featuring-nginx-web-server-using-docker/

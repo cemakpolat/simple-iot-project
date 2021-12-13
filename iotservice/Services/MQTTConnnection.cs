@@ -1,8 +1,5 @@
-using System;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.Extensions.Configuration;
+using System;
 using MQTTnet;
 using MQTTnet.Client.Connecting;
 using MQTTnet.Client.Disconnecting;
@@ -10,35 +7,28 @@ using MQTTnet.Client.Options;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Extensions.ManagedClient;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 using Serilog;
-using MongoDB.Driver;
-using MongoDB.Bson;
-using System.Collections;
+using System.Text;
 
-namespace DataStore.Services
+namespace iotservice.Services
 {
- class MQTTConnnection{
-        IConfiguration Configuration { get; }
+  class MQTTConnnection{
         IManagedMqttClient _mqttClient  = null;
-        String mqttClient;
-        String brokerIp;
-        int brokerPort;
+        String client;
+        String brokerUrl;
+        int brokerPort = 1883;
         ManagedMqttClientOptions options = null;
-        private  IoTService _iotService;
-        private String cstring; 
-        private String database; 
-        public MQTTConnnection(IConfiguration configuration){
-            Configuration = configuration;
-            this.setSettings();
-            this.setup(mqttClient, brokerIp, brokerPort);
-            
+        public MQTTConnnection(){}
+        public MQTTConnnection(String client, String broker, int port){
+            this.client = client;
+            this.brokerUrl = broker;
+            this.brokerPort = port;
+            this.setup();
+            this.subscribe("/sensors/");
         }
-        public void setSettings(){
-            this.cstring = Configuration.GetSection("DatabaseSettings").GetSection("ConnectionString").Value;
-            this.database = Configuration.GetSection("DatabaseSettings").GetSection("Database").Value;
-            this.brokerIp = Configuration.GetSection("MQTTSettings").GetSection("BrokerURL").Value;
-            this.brokerPort = int.Parse(Configuration.GetSection("MQTTSettings").GetSection("BrokerPort").Value);
-            this.mqttClient = Configuration.GetSection("MQTTSettings").GetSection("MQTTClientID").Value;
+        public void setup(){
+            this.setup(this.client, this.brokerUrl, this.brokerPort);
         }
         public void setup(String client, String url, int port){
             MqttClientOptionsBuilder builder = new MqttClientOptionsBuilder()
@@ -56,37 +46,25 @@ namespace DataStore.Services
             this._mqttClient.DisconnectedHandler = new MqttClientDisconnectedHandlerDelegate(OnDisconnected);
             this._mqttClient.ConnectingFailedHandler = new ConnectingFailedHandlerDelegate(OnConnectingFailed);
 
-
+            this._mqttClient.ApplicationMessageReceivedHandler = new MqttApplicationMessageReceivedHandlerDelegate(a => {
+                Log.Logger.Information("Message recieved: {payload}", a.ApplicationMessage);
+                //     var user = JsonConvert.DeserializeObject<Object>( a.ApplicationMessage);
+            });
+            
             _mqttClient.UseApplicationMessageReceivedHandler(e => handleMessage(e.ApplicationMessage));
+
             _mqttClient.StartAsync(options).GetAwaiter().GetResult();
-            this.subscribe("/sensors/");
 
            
         }
-        private async void handleMessage(MqttApplicationMessage message){
+        private void handleMessage(MqttApplicationMessage message){
                 Console.WriteLine("### RECEIVED APPLICATION MESSAGE ###");
                 Console.WriteLine($"+ Topic = {message.Topic}");
-                
-                DataStore.Models.IoTEntity entity = JsonConvert.DeserializeObject<DataStore.Models.IoTEntity>(Encoding.UTF8.GetString(message.Payload));
-                
-                DataStore.Domain.Entity  et = new DataStore.Domain.Entity();
-                et.name = entity.name;
-                et.objectType = entity.objectType;
-                et.uuid = entity.uuid;
-                et.groupId = entity.groupId;
-                et.properties = new List<DataStore.Domain.Property>();
-                foreach(DataStore.Models.IoTProperty prop in entity.properties){
-                    List<DataStore.Domain.Value> list = new List<DataStore.Domain.Value>();
-                    list.Add(new DataStore.Domain.Value(prop.timestamp, prop.value));
-                    et.properties.Add(new DataStore.Domain.Property(prop.objectType, prop.key,list));
-                }
-                
-                _iotService = new IoTService(this.cstring, this.database);
-                await _iotService.Insert(et);
-                
+                Console.WriteLine($"+ Payload = {Encoding.UTF8.GetString(message.Payload)}");
+                Console.WriteLine($"+ QoS = {message.QualityOfServiceLevel}");
+                Console.WriteLine($"+ Retain = {message.Retain}");
+                Console.WriteLine();
         }
-        
-
 
         public void subscribe(String topic){
             this._mqttClient.SubscribeAsync(

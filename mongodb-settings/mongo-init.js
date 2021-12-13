@@ -1,7 +1,7 @@
 ﻿db.createUser(
     {
-        user: "prometheus",
-        pwd: "engineer",
+        user: "root",
+        pwd: "universe",
         roles: [
             {
                 role: "readWrite",

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-mqtt-example": {
+    "iot-dashboard": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-mqtt-example",
+            "outputPath": "dist/iot-dashboard",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular-mqtt-example:build"
+            "browserTarget": "iot-dashboard:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular-mqtt-example:build:production"
+              "browserTarget": "iot-dashboard:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular-mqtt-example:build"
+            "browserTarget": "iot-dashboard:build"
           }
         },
         "test": {
@@ -111,15 +111,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular-mqtt-example:serve"
+            "devServerTarget": "iot-dashboard:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular-mqtt-example:serve:production"
+              "devServerTarget": "iot-dashboardserve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "angular-mqtt-example"
+  "defaultProject": "iot-dashboard"
 }

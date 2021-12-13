@@ -7,7 +7,7 @@ using DataStore.Domain;
 using DataStore.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 namespace DataStore.Controllers
 {
     
@@ -25,19 +25,21 @@ namespace DataStore.Controllers
             _iotService = service;
         }
         
-        
+      /*  
+      // TODO: Actual Entity and incoming json cannot be properly converted.
         [HttpPost]
-        public async Task<ActionResult> Insert([FromBody]Entity list)
+        public async Task<ActionResult> Insert([FromBody]Entity entity)
         {
-            var result = await _iotService.Insert(list);
+            var result = await _iotService.Insert(et);
             if (result != null)
             {
                 return Ok(result);
             }
             return BadRequest();
         }
-
-        
+    */
+    
+    
         [HttpGet]
         public async Task<ActionResult> Get()
         {
