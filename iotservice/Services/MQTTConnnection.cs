@@ -13,12 +13,22 @@ using System.Text;
 
 namespace iotservice.Services
 {
+  class Util{
+        public Util(){}
+        public long getCurrentTime(){
+            DateTime now = DateTime.UtcNow;
+		    long unixTimeMilliseconds = new DateTimeOffset(now).ToUnixTimeMilliseconds();
+            return unixTimeMilliseconds;
+        }
+  }
   class MQTTConnnection{
+        public long lastReceivedMessageTimestamp = 0;
         IManagedMqttClient _mqttClient  = null;
         String client;
         String brokerUrl;
         int brokerPort = 1883;
         ManagedMqttClientOptions options = null;
+        Util util;
         public MQTTConnnection(){}
         public MQTTConnnection(String client, String broker, int port){
             this.client = client;
@@ -26,7 +36,9 @@ namespace iotservice.Services
             this.brokerPort = port;
             this.setup();
             this.subscribe("/sensors/");
+            this.util = new Util();
         }
+
         public void setup(){
             this.setup(this.client, this.brokerUrl, this.brokerPort);
         }
@@ -57,8 +69,12 @@ namespace iotservice.Services
 
            
         }
+       
         private void handleMessage(MqttApplicationMessage message){
-                Console.WriteLine("### RECEIVED APPLICATION MESSAGE ###");
+                
+                lastReceivedMessageTimestamp = util.getCurrentTime();
+
+                Console.WriteLine("### IoT Service/Consumer received a message###");
                 Console.WriteLine($"+ Topic = {message.Topic}");
                 Console.WriteLine($"+ Payload = {Encoding.UTF8.GetString(message.Payload)}");
                 Console.WriteLine($"+ QoS = {message.QualityOfServiceLevel}");

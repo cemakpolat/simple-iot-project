@@ -1,5 +1,8 @@
 import paho.mqtt.client as mqtt
 import socket
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 broker  = "broker"
 port = 1883
@@ -8,14 +11,14 @@ client_id = "pm-engine-1"
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
-        print("Connected to MQTT Broker!")
+        logging.info("Connected to MQTT Broker!")
        
     else:
-        print("Failed to connect, return code %d\n", rc)
+        logging.info("Failed to connect, return code %d\n", rc)
     
 
 def on_message(client, userdata, msg):
-    print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+    logging.info(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
 
 
 client = mqtt.Client(client_id)

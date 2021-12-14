@@ -12,6 +12,14 @@ using Serilog;
 
 namespace iotsensor.Services
 {
+      class Util{
+        public Util(){}
+        public long getCurrentTime(){
+            DateTime now = DateTime.UtcNow;
+		    long unixTimeMilliseconds = new DateTimeOffset(now).ToUnixTimeMilliseconds();
+            return unixTimeMilliseconds;
+        }
+  }
     class MQTTConnnection{
         IManagedMqttClient _mqttClient  = null;
         String client;

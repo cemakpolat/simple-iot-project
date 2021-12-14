@@ -62,11 +62,11 @@ services:
       - broker
     ports:
       - 4200:80
-  # pmengine:
-  #   image: pmengine
-  #   build:
-  #     context: ./pm-engine/
-  #     dockerfile: Dockerfile
-  #   depends_on:
-  #     - broker
  
+  pmengine:
+    image: pmengine
+    build:
+      context: ./pm-engine/
+      dockerfile: Dockerfile
+    depends_on:
+      - broker
