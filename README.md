@@ -28,13 +28,13 @@ The data distribution among all other components are carried out via MQTT broker
 
 Sensor simulates a temperature service that generates randomly temperature values and sends it through MQTT communication protocol to the broker as a publisher. The device simulating service first transmits data and then stops for a while in a continous loop. 
 
-** Technical View **
+**Technical View**
 
 #### Data Processing&Observer Service (Temperature Observer Service / Data Consumer)
 
 This module consumes the data sent from the temperature sensor and process it. The actual service sends all received objects to the MQTT broker as well as error messages if any message is received for a while.
 
-** Technical View **
+**Technical View**
 
 #### Data Storing&Requesting Service 
 
@@ -42,7 +42,7 @@ All sensor data is directly stored in the mongo database and the swagger interfa
 
 ![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/swagger.png)
 
-** Technical View **
+**Technical View**
 
 #### User Interfaces
 
@@ -52,13 +52,15 @@ An enduser application is offered to monitor the temperature sensor values and t
 
 ![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/log.png)
 
-** Technical View **
+**Technical View**
+
 The app is constructed on (coreui/angular)[https://coreui.io/angular/] based on the angular framework.
 
 #### Predictive Maintenance (TODO)
 
 An autonomous smart factory necessitates to detect the errorness or the possibility of having a failure at devices. The predictive maintenance service aims at aggregating the data from the sensors and predict whether the device behaves normal based on the historical data. This component will be added as a future work. 
-** Technical View **
+
+**Technical View**
 
 
 # How to run
