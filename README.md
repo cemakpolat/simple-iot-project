@@ -8,7 +8,7 @@ A smart factory environment is composed of many simple and complex devices that 
 ## System Architecture 
 
 The realization of this idea can be performed via a small IoT setup presented below. 
-
+![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/arch.png)
 
 ### Required Technologies
 - Communication Protocols: MQTT, HTTP, Websocket 
@@ -29,4 +29,5 @@ The realization of this idea can be performed via a small IoT setup presented be
 To run the project, call simply the following commands:
 
 `docker-compose build`
+
 `docker-compose up`
