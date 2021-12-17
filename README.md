@@ -31,3 +31,12 @@ To run the project, call simply the following commands:
 `docker-compose build`
 
 `docker-compose up`
+
+User Interface for visualizing simulated sensor values and logs
+
+http://localhost:4200/
+
+Swagger Interface for interacting with the datastore
+
+http://localhost:5003/swagger/index.html
+
