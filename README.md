@@ -1,6 +1,6 @@
 # Building a Simple IoT middleware
 
 
+To run the project, call simply the following command
 
-Add configuration manager for retrieving parameters from the config file
-`dotnet add package System.Configuration.ConfigurationManager`
+`docker-compose up`
