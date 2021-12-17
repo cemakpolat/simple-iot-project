@@ -40,7 +40,13 @@ All sensor data is directly stored in the mongo database and the swagger interfa
 
 4. User Interfaces
 
-An enduser application is offered to monitor the temperature sensor values and the log messages sent by the services. 
+An enduser application is offered to monitor the temperature sensor values and the log messages sent by the services. These interfaces are demonstrated below:
+
+![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/sensor.png)
+
+![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/log.png)
+
+
 
 5. Predictive Maintenance (TODO)
 
@@ -65,5 +71,5 @@ http://localhost:5003/swagger/index.html
 
 Rest interface:
 
-http://localhost:5003/api/Entity
+http://localhost:5003/api/Entity/
 
