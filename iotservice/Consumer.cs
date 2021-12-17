@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Newtonsoft.Json;
@@ -13,7 +14,7 @@ namespace iotservice
 
         private static bool _isDeviceStreamingData = true;
         private static bool _isRunning = true;
-        private static long _maxTimeDuration = 30*1000; // 30 sn
+        private static long _maxTimeDuration = 5*1000; // 30 sn
         static async  Task Main(string[] args) {
             
             Log.Logger = new LoggerConfiguration()
@@ -47,8 +48,11 @@ namespace iotservice
                     long timeDifference = util.getCurrentTime() - mqtt.lastReceivedMessageTimestamp;
                     if (timeDifference >= _maxTimeDuration){
                         Log.Information("Message cannot be received...");
-                        mqtt.sendMessage("/sensor/error/","Message cannot be received...");
+                        LogMessage mes = new LogMessage("service-1","Message cannot be received from sensor");
+                        string logmes = JsonConvert.SerializeObject(mes);
+                        mqtt.sendMessage("/sensors/logs",logmes);
                     }
+                    Thread.Sleep(1000);
             }  
         }  
     }

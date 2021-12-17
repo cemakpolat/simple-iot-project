@@ -13,6 +13,17 @@ using System.Text;
 
 namespace iotservice.Services
 {
+class LogMessage{
+     public String component { get; set; }
+  
+        public long timestamp { get; set; }
+        public String message { get; set; }
+        public LogMessage(){}
+        public LogMessage(String comp, String mes){
+            this.component = comp;
+            this.message = mes;
+        }
+}
   class Util{
         public Util(){}
         public long getCurrentTime(){
@@ -75,12 +86,19 @@ namespace iotservice.Services
                 lastReceivedMessageTimestamp = util.getCurrentTime();
 
                 Console.WriteLine("### IoT Service/Consumer received a message###");
+                
+                LogMessage mes = new LogMessage("service-1",Encoding.UTF8.GetString(message.Payload));
+                string logmes = JsonConvert.SerializeObject(mes);
+                Console.WriteLine("message",logmes);
+                this.sendMessage("/sensors/logs",logmes);
+
                 Console.WriteLine($"+ Topic = {message.Topic}");
                 Console.WriteLine($"+ Payload = {Encoding.UTF8.GetString(message.Payload)}");
                 Console.WriteLine($"+ QoS = {message.QualityOfServiceLevel}");
                 Console.WriteLine($"+ Retain = {message.Retain}");
                 Console.WriteLine();
         }
+        
 
         public void subscribe(String topic){
             this._mqttClient.SubscribeAsync(
@@ -93,7 +111,7 @@ namespace iotservice.Services
         }
         
          public void sendMessage(String topic, String json){
-             Task.Run(() => this._mqttClient.PublishAsync(topic, json));
+            //  Task.Run(() => this._mqttClient.PublishAsync(topic, json));
             this._mqttClient.PublishAsync(topic, json);
         }
         

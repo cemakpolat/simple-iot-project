@@ -7,5 +7,5 @@ COPY . /app
 RUN npm run build --prod
 
 FROM nginx:1.20.1
-COPY --from=build-step /app/dist/iot-dashboard /usr/share/nginx/html
+COPY --from=build-step /app/dist/dashboard /usr/share/nginx/html
 EXPOSE 4200:80

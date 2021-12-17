@@ -1,0 +1,20 @@
+<c-card class="mb-4">
+  <c-card-body>
+    <c-row>
+      <c-col sm="5">
+        <h4 class="card-title mb-0" id="traffic">
+          {{title}}
+        </h4>
+        <div class="small text-medium-emphasis">Simulated Sensor</div>
+      </c-col>
+      <c-col class="d-none d-md-block" sm="7">
+      </c-col>
+    </c-row>  
+    <c-chart type="line" 
+        [data]="chartLineData" 
+        [ngStyle]="{'marginTop.px': 20}" 
+        [options]="chartLineOptions">
+      </c-chart>
+  </c-card-body>
+</c-card>
+

@@ -39,7 +39,7 @@ namespace DataStore.Services
         }
 
 
-        public async Task<Entity> Insert(Entity entity) //Create
+        public async Task<Entity> Insert(Entity entity) 
         {   
             bool exist  = _collection.Find(t => t.uuid == entity.uuid).Any();
 
@@ -62,14 +62,11 @@ namespace DataStore.Services
             return entity;
         }
   
-            public async Task<Entity> Insert(String uuid, Property prop, Value val) 
-        {
-            var filter = Builders<Entity>.Filter.And(
-            Builders<Entity>.Filter.Eq("uuid", uuid),
-            Builders<Entity>.Filter.Eq("properties.key", prop.key));
-            var update = Builders<Entity>.Update.Push("properties.$.values", val);
+         public async Task<Entity> InsertSingleEntity(Entity entity) 
+        {   
+            await _collection.InsertOneAsync(entity);
             
-            return null;
+            return entity;
         }
         
 

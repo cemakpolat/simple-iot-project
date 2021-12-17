@@ -24,21 +24,20 @@ namespace DataStore.Controllers
         {
             _iotService = service;
         }
-        
-      /*  
-      // TODO: Actual Entity and incoming json cannot be properly converted.
-        [HttpPost]
-        public async Task<ActionResult> Insert([FromBody]Entity entity)
-        {
-            var result = await _iotService.Insert(et);
-            if (result != null)
-            {
-                return Ok(result);
-            }
-            return BadRequest();
-        }
-    */
-    
+      
+        /**
+        TODO: Actual Entity and incoming json cannot be properly converted.
+        */
+        // [HttpPost]
+        // public async Task<ActionResult> Insert([FromBody]Entity entity)
+        // {
+        //     var result = await _iotService.InsertSingleEntity(entity);
+        //     if (result != null)
+        //     {
+        //         return Ok(result);
+        //     }
+        //     return BadRequest();
+        // }
     
         [HttpGet]
         public async Task<ActionResult> Get()
