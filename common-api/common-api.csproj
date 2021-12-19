@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>common_api</RootNamespace>
+    <Version>0.1.0</Version>
+    <Authors>Cem Akpolat</Authors>
+  </PropertyGroup>
+
+</Project>

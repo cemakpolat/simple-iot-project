@@ -24,11 +24,21 @@ The realization of this idea can be performed via a small IoT setup presented be
 
 The data distribution among all other components are carried out via MQTT broker.
 
+
+#### Common Lass Lib
+How to create a class library and how it can be consumed by another app
+dotnet new classlib
+dotnet pack
+dotnet add reference ../common-api/common-api.csproj
+Link: https://stackoverflow.com/questions/49805204/adding-reference-to-another-project-from-visual-studio-code
+https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli
+
 #### Temperature Sensor/Service (Producer):
 
 Sensor simulates a temperature service that generates randomly temperature values and sends it through MQTT communication protocol to the broker as a publisher. The device simulating service first transmits data and then stops for a while in a continous loop. 
 
 **Technical View**
+Configuration File
 
 #### Data Processing&Observer Service (Temperature Observer Service / Data Consumer)
 
@@ -83,3 +93,18 @@ http://localhost:5003/swagger/index.html
 Rest interface:
 
 http://localhost:5003/api/Entity/
+
+## Dotnet consoel commands for mac environment
+
+dotnet new Console --framework net6.0
+dotnet new console -n subscriber
+dotnet build
+dotnet run
+dotnet restore
+dotnet update
+
+dotnet add package MongoDB.Driver
+dotnet add package MQTTnet --version 3.1.1
+dotnet add package serilog
+dotnet add package Newtonsoft.Json
+dotnet add package Serilog.Sinks.Console
