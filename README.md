@@ -20,6 +20,7 @@ The realization of this idea can be performed via a small IoT setup presented be
 
 ### System Components 
 
+
 #### MQTT Broker
 
 The data distribution among all other components are carried out via MQTT broker. In this project, the selected mqtt-broker is customized image based on the mosquitto-eclipse broker `toke/mosquitto`, because the websocket communication is enabled in this image, which is required for the user interface.
@@ -27,7 +28,7 @@ The data distribution among all other components are carried out via MQTT broker
 
 #### Temperature Sensor/Service (Producer):
 
-Sensor simulates a temperature service that generates randomly temperature values and sends it through MQTT communication protocol to the broker as a publisher. The device simulating service first transmits data and then stops for a while in a continous loop. 
+Sensor simulates a temperature service that generates randomly temperature values and sends it through MQTT communication protocol to the broker as a publisher. The service simulating device first transmits data and then stops for a while in a continous loop. The behavior of the simulation can be easily modified using the `App.config` file. 
 
 **Technical View**
 Configuration File
@@ -56,7 +57,7 @@ An enduser application is offered to monitor the temperature sensor values and t
 
 **Technical View**
 
-The app is constructed on (coreui/angular)[https://coreui.io/angular/] based on the angular framework.
+The app is constructed on the free vesion of (coreui/angular)[https://coreui.io/angular/] based on the angular framework. 
 
 #### Predictive Maintenance (TODO)
 
@@ -67,6 +68,8 @@ An autonomous smart factory necessitates to detect the errorness or the possibil
 #### Common Class Library
 
 Some projects includes the repetitive codes, and this class library targets to eliminate this issue by designing a common architecture. In the current version it is integrated in the other modules. It is highly recommeded to read the common-api/README.md that indicates how to do this approach.
+
+## Docker-Compose Structure
 
 # How to run
 
