@@ -17,28 +17,80 @@ The realization of this idea can be performed via a small IoT setup presented be
 - Database: MongoDB
 - Container Tech: Docker
 - Machine Learning Algorithm: LSTM, … (TODO)
+- Development Environment: Mac OSX Catalina
+- .NET 5: Install from this link https://docs.microsoft.com/en-us/dotnet/core/install/macos
 
 ### System Components 
-
 
 #### MQTT Broker
 
 The data distribution among all other components are carried out via MQTT broker. In this project, the selected mqtt-broker is customized image based on the mosquitto-eclipse broker `toke/mosquitto`, because the websocket communication is enabled in this image, which is required for the user interface.
 
+**Technical View**
+You can test the broker with the following command line:
+
+`docker run -ti -p 127.0.0.1:1883:1883 -p 9001:9001 toke/mosquitto`
+
+The easiest way to test the broker either run a simple python script or using a tool such as MQTT.fx. For python libraries, you can check this link: https://github.com/emqx/MQTT-Client-Examples/tree/master/mqtt-client-Python3
+
+#### IoT Data Model and Common-API
+ 
+ The IoT data model abstracts the features of an IoT sensor and allow its communication with other sensors or devices. We (me and other colleagues) described an IoT model in https://ieeexplore.ieee.org/document/8767276 and implemented it in https://github.com/GT-ARC/chariot-apis. In this tutorial, a very simplified version of this model is utilized. Two classes, namely, IoTEntity and Property belonging to the IoTEntity are implemented with the limited features. This model covers only the primive devices, for a complex device, it is recommended to utilize the whole library.
+ 
 
 #### Temperature Sensor/Service (Producer):
 
 Sensor simulates a temperature service that generates randomly temperature values and sends it through MQTT communication protocol to the broker as a publisher. The service simulating device first transmits data and then stops for a while in a continous loop. The behavior of the simulation can be easily modified using the `App.config` file. 
 
 **Technical View**
-Configuration File
+dotnet new console --name iotservice
+add required libs
 
+`dotnet add package MongoDB.Driver`
+`dotnet add package MQTTnet --version 3.1.1`
+`dotnet add package serilog`
+`dotnet add package Newtonsoft.Json`
+`dotnet add package Serilog.Sinks.Console`
+
+- App.config
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <appSettings>
+        <add key="brokerUrl" value="broker" />
+        <add key="brokerPort" value="1883" />
+        <add key="mqttClientId" value="sensor-1" />
+        <add key="waiting_duration" value="100" />
+        <add key="sim_mode_changing_duration" value="10000" />
+        <!-- <add key="entityId" value="UUID" /> -->
+    </appSettings>
+</configuration>
+
+- Classes
+- Dockerfile
+dotnet run 
 #### Data Processing&Observer Service (Temperature Observer Service / Data Consumer)
 
 This module consumes the data sent from the temperature sensor and process it. The actual service sends all received objects to the MQTT broker as well as error messages if any message is received for a while.
 
 **Technical View**
+dotnet new console --name iotservice
 
+- App.config
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <appSettings>
+        <add key="brokerUrl" value="broker" />
+        <add key="brokerPort" value="1883" />
+        <add key="mqttClientId" value="service-1" />
+        <!-- <add key="entityId" value="UUID" /> -->
+    </appSettings>
+</configuration>
+
+- Classes
+    - Consumer, Servies/MQTTConnection
+- Dockerfile
+
+dotnet run
 #### Data Storing&Requesting Service 
 
 All sensor data is directly stored in the mongo database and the swagger interface enables to fetch the stored data from the database.
@@ -46,6 +98,19 @@ All sensor data is directly stored in the mongo database and the swagger interfa
 ![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/swagger.png)
 
 **Technical View**
+create project
+
+`dotnet new webapi --name datastore`
+
+
+- appsettings.json
+- launchsettings.json
+- Classes
+    - MQTTConnection
+    - Producer
+    - Simulator
+- Dockerfile
+- mongo-settings
 
 #### User Interfaces
 
@@ -58,6 +123,8 @@ An enduser application is offered to monitor the temperature sensor values and t
 **Technical View**
 
 The app is constructed on the free vesion of (coreui/angular)[https://coreui.io/angular/] based on the angular framework. 
+- important files that should be explained for the clarification of the code structure
+- MQTT service over websocket
 
 #### Predictive Maintenance (TODO)
 
@@ -93,6 +160,8 @@ Rest interface:
 http://localhost:5003/api/Entity/
 
 ## Dotnet console commands for mac environment
+
+https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new
 
 dotnet new Console --framework net6.0
 dotnet new console -n subscriber
