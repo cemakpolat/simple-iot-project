@@ -14,7 +14,9 @@ It is also recommended to read the
 - Multi-project .net core solution in Docker image [https://www.softwaredeveloper.blog/multi-project-dotnet-core-solution-in-docker-image]
 pages to understand the overall docker concept for the dot net apps.
 
-# How to reference this class lib
+# How to create a class library and how it can be consumed by another app
 
-- `cd target_project_folder/`
-- `dotnet add reference ../common-api/common-api.csproj`
+`dotnet new classlib `
+`dotnet pack`
+`cd target_project_folder/`
+`dotnet add reference ../common-api/common-api.csproj`

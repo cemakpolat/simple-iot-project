@@ -22,16 +22,8 @@ The realization of this idea can be performed via a small IoT setup presented be
 
 #### MQTT Broker
 
-The data distribution among all other components are carried out via MQTT broker.
+The data distribution among all other components are carried out via MQTT broker. In this project, the selected mqtt-broker is customized image based on the mosquitto-eclipse broker `toke/mosquitto`, because the websocket communication is enabled in this image, which is required for the user interface.
 
-
-#### Common Lass Lib
-How to create a class library and how it can be consumed by another app
-dotnet new classlib
-dotnet pack
-dotnet add reference ../common-api/common-api.csproj
-Link: https://stackoverflow.com/questions/49805204/adding-reference-to-another-project-from-visual-studio-code
-https://docs.microsoft.com/en-us/nuget/quickstart/create-and-publish-a-package-using-the-dotnet-cli
 
 #### Temperature Sensor/Service (Producer):
 
@@ -72,6 +64,9 @@ An autonomous smart factory necessitates to detect the errorness or the possibil
 
 **Technical View**
 
+#### Common Class Library
+
+Some projects includes the repetitive codes, and this class library targets to eliminate this issue by designing a common architecture. In the current version it is integrated in the other modules. It is highly recommeded to read the common-api/README.md that indicates how to do this approach.
 
 # How to run
 
@@ -94,7 +89,7 @@ Rest interface:
 
 http://localhost:5003/api/Entity/
 
-## Dotnet consoel commands for mac environment
+## Dotnet console commands for mac environment
 
 dotnet new Console --framework net6.0
 dotnet new console -n subscriber
