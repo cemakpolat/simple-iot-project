@@ -47,9 +47,11 @@ Sensor simulates a temperature service that generates randomly temperature value
 
 **Technical View**
 
+- create a project called iotservice:
+
 `dotnet new console --name iotservice`
 
-add required libs
+- add the required libraries:
 
 ```
 dotnet add package MongoDB.Driver
@@ -58,7 +60,8 @@ dotnet add package serilog
 dotnet add package Newtonsoft.Json
 dotnet add package Serilog.Sinks.Console
 ```
-- App.config
+- Create an App.config file and edit it as follow. The brokerUrl can be replaced with localhost if it will tested seperately.  The first three parameters are the standard mqttp parameters, the rest defines how the simulator should send the data to the mqtt broker. Below, `waiting_daruratio` represents the data transmission frequency, while `sim_mode_changing_duration` indicates how much time the broker should pause, i.e. no data transmission. The last parameter shows the sensor UUID, which differs this sensor from others.
+- 
 ```
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
@@ -110,6 +113,14 @@ create project
 
 `dotnet new webapi --name datastore`
 
+add the required libraries:
+```
+dotnet add package MongoDB.Driver
+dotnet add package MQTTnet --version 3.1.1
+dotnet add package serilog
+dotnet add package Newtonsoft.Json
+dotnet add package Serilog.Sinks.Console
+```
 
 - appsettings.json
 - launchsettings.json
