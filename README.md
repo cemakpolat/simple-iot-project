@@ -1,4 +1,4 @@
-# Building a Simple IoT middleware
+# Creating a Simple IoT Middleware 
 
 ## Use Case 
 
@@ -51,17 +51,18 @@ Sensor simulates a temperature service that generates randomly temperature value
 
 `dotnet new console --name iotservice`
 
-- add the required libraries:
+- add the following libraries that are required for the mqtt connection, a better logging, the json-to-from-object convertor (POJO) and processing the configuration file.
 
 ```
-dotnet add package MongoDB.Driver
 dotnet add package MQTTnet --version 3.1.1
+dotnet add package MQTTnet.Extensions.ManagedClient --version 3.1.1
 dotnet add package serilog
 dotnet add package Newtonsoft.Json
 dotnet add package Serilog.Sinks.Console
+dotnet add package System.Configuration.ConfigurationManager --version 6.0.0
 ```
 - Create an App.config file and edit it as follow. The brokerUrl can be replaced with localhost if it will tested seperately.  The first three parameters are the standard mqttp parameters, the rest defines how the simulator should send the data to the mqtt broker. Below, `waiting_daruratio` represents the data transmission frequency, while `sim_mode_changing_duration` indicates how much time the broker should pause, i.e. no data transmission. The last parameter shows the sensor UUID, which differs this sensor from others.
-- 
+
 ```
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
@@ -75,9 +76,13 @@ dotnet add package Serilog.Sinks.Console
     </appSettings>
 </configuration>
 ```
-- Classes
-- Dockerfile
-dotnet run 
+- Classes: Simulator class describes how often a random value should be generated and transmitted, and then pause. It can be extended and controlled from another script through the app.config file
+
+- Run the program to see how it works. The minimum rrequirements for the test is to have an mqtt broker and a tool that can behave as subscriber. Both are given in the MQTT-Broker section.
+
+`dotnet run`
+
+- Dockerize: The docker file describes how the project will be dockerized, i.e. copying the files, restoring the app, building/publishing the program as a release. Notice that the multi-state build is applied in order to keep docker container small and efficient. Multi-state docker building works simply as follows: the requirement on the first image will not moved to the second image, so that the images will kept small sized. Please the docker-compose section, where the references to this topic are given.
 #### Data Processing&Observer Service (Temperature Observer Service / Data Consumer)
 
 This module consumes the data sent from the temperature sensor and process it. The actual service sends all received objects to the MQTT broker as well as error messages if any message is received for a while.
@@ -99,7 +104,7 @@ This module consumes the data sent from the temperature sensor and process it. T
 ```
 - Classes
     - Consumer, Servies/MQTTConnection
-- Dockerfile
+- Dockerfile: 
 
 dotnet run
 #### Data Storing&Requesting Service 
