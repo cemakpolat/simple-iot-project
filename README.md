@@ -33,26 +33,33 @@ You can test the broker with the following command line:
 
 The easiest way to test the broker either run a simple python script or using a tool such as MQTT.fx. For python libraries, you can check this link: https://github.com/emqx/MQTT-Client-Examples/tree/master/mqtt-client-Python3
 
-#### IoT Data Model and Common-API
+#### IoT Data Model 
  
- The IoT data model abstracts the features of an IoT sensor and allow its communication with other sensors or devices. We (me and other colleagues) described an IoT model in https://ieeexplore.ieee.org/document/8767276 and implemented it in https://github.com/GT-ARC/chariot-apis. In this tutorial, a very simplified version of this model is utilized. Two classes, namely, IoTEntity and Property belonging to the IoTEntity are implemented with the limited features. This model covers only the primive devices, for a complex device, it is recommended to utilize the whole library.
- 
+ An IoT data model abstracts the features of an IoT sensor and allow its communication with other sensors or devices. We (me and other colleagues) described an IoT model in https://ieeexplore.ieee.org/document/8767276 and implemented it in https://github.com/GT-ARC/chariot-apis. In this tutorial, a very simplified version of this model is utilized. Two classes, namely, IoTEntity and Property belonging to the IoTEntity are implemented with the limited features. This model covers only the primive devices, for a complex device, it is recommended to utilize the whole library.
+
+#### Common-API
+
+The desired approach of using an IoT data model is to describe it under a common-api folder and enable its integration by other projects. Even this approach is possible and described how to do in common-api/README.md file, it is not considered in this tutorial.
 
 #### Temperature Sensor/Service (Producer):
 
 Sensor simulates a temperature service that generates randomly temperature values and sends it through MQTT communication protocol to the broker as a publisher. The service simulating device first transmits data and then stops for a while in a continous loop. The behavior of the simulation can be easily modified using the `App.config` file. 
 
 **Technical View**
-dotnet new console --name iotservice
+
+`dotnet new console --name iotservice`
+
 add required libs
 
-`dotnet add package MongoDB.Driver`
-`dotnet add package MQTTnet --version 3.1.1`
-`dotnet add package serilog`
-`dotnet add package Newtonsoft.Json`
-`dotnet add package Serilog.Sinks.Console`
-
+```
+dotnet add package MongoDB.Driver
+dotnet add package MQTTnet --version 3.1.1
+dotnet add package serilog
+dotnet add package Newtonsoft.Json
+dotnet add package Serilog.Sinks.Console
+```
 - App.config
+```
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     <appSettings>
@@ -64,7 +71,7 @@ add required libs
         <!-- <add key="entityId" value="UUID" /> -->
     </appSettings>
 </configuration>
-
+```
 - Classes
 - Dockerfile
 dotnet run 
@@ -73,9 +80,10 @@ dotnet run
 This module consumes the data sent from the temperature sensor and process it. The actual service sends all received objects to the MQTT broker as well as error messages if any message is received for a while.
 
 **Technical View**
-dotnet new console --name iotservice
+`dotnet new console --name iotservice`
 
 - App.config
+```
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
     <appSettings>
@@ -85,7 +93,7 @@ dotnet new console --name iotservice
         <!-- <add key="entityId" value="UUID" /> -->
     </appSettings>
 </configuration>
-
+```
 - Classes
     - Consumer, Servies/MQTTConnection
 - Dockerfile
