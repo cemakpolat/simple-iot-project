@@ -15,8 +15,9 @@ It is also recommended to read the
 pages to understand the overall docker concept for the dot net apps.
 
 # How to create a class library and how it can be consumed by another app
-
-`dotnet new classlib `
-`dotnet pack`
-`cd target_project_folder/`
-`dotnet add reference ../common-api/common-api.csproj`
+```
+dotnet new classlib
+dotnet pack
+cd target_project_folder/
+dotnet add reference ../common-api/common-api.csproj
+```
