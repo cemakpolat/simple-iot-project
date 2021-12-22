@@ -1,0 +1,19 @@
+<table cTable responsive="xxl">
+  <thead >
+  <tr>
+  <th scope="col">#</th>
+  <th scope="col">Component</th>
+  <th scope="col">Log</th>
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let field of fieldArray; let i = index">
+      <th scope="row">{{i+1}}</th>
+        <td >
+            {{field.component}}
+        </td>
+        <td >
+          {{field.message}}
+        </td>
+  </tbody>
+  </table>
