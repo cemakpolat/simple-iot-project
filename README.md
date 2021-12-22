@@ -267,5 +267,14 @@ const routes: Routes = [
 
 #### Predictive Maintenance (TODO)
 
-An autonomous smart factory necessitates to detect the errorness or the possibility of having a failure at devices. The predictive maintenance service aims at aggregating the data from the sensors and predict whether the device behaves normal based on the historical data. This component will be added as a future work. 
+An autonomous smart factory necessitates to detect the errorness or the possibility of having a failure at devices. The predictive maintenance service aims at aggregating the data from the sensors and predict whether the device behaves normal based on the historical data. This component will be added as a future work.
+
+## Future Works 
+- Extend IoT Data Model
+- Add UUID to each sensor via App.config
+- Add UUID to be subscribed or published to services or devices in App.config.
+- Find solutions for Single Point of Failures such as more than a MQTT Broker, multipe database, etc.
+- Improve user web interface, be able to display all devices in the dashboard.
+- Extend the controller functionalities in the datastore
+
 
