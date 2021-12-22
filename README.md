@@ -1,9 +1,20 @@
 # Creating a Simple IoT Project
 
+## Quick Start
+
+All project components are dockerized and docker-compose solves all dependency issues among them. To run the project, call simply the following commands:
+
+- Assumption: docker and docker-compose are installed on the development environment
+- Clone the project: git clone https://github.com/cemakpolat/simple-iot-project.git
+- Execute the command inside the project folder: `docker-compose build`
+- Execute the command inside the project folder: `docker-compose up`
+- User web interface: http://localhost:4200/
+- Swagger web interface: http://localhost:5003/swagger/index.html
+- Rest interface: http://localhost:5003/api/Entity/
+
 ## Use Case 
 
 A smart factory environment is composed of many simple and complex devices that owns diverse features. The harmonization of all these features necessitates an IoT platform that unifies distinguished data models ranging from devices to human actor. The well known topic and crucial aspect of the smart factories is to predict beforehand when a device will be broken, since the whole production chain can severely be affected from a broken device in the system, and this may lead to stopping the complete system, which is not desired due to the cost and user perspectives. In order to prevent this kind of issues, a predictive maintenance system should be introduced to foresee when a device will be damaged, and it has to be replaced. To visualize such a use-case, we assume that a temperature sensor embedded in the production line is continuously monitored in a factory environment. All data retrieved from this sensor to the backend services for further analysis. Based on the observation analysis, the possibility of having a broken device is predicted. In the following section, only the data aggregation and visualization parts are implemented. The predictive maintenance module will be later integrated in the rest of the system.
-
 
 ## System Architecture 
 
@@ -174,6 +185,10 @@ dotnet add package Swashbuckle.AspNetCore --version 5.6.3
     - Services/* supports the classes direct interaction with the database using IoTService and mqtt connection via MQTTConnection. The IoT object in JSON lands in the MQTTConnection object, converted to Entity object and then stored in the mongodb using IoTService object
     - Startup.cs class behaves like main initiater, adds all required app configuration, append new classes such as IoTservice and initiate the MQTT connection.
 - Dockerfile: Same structure as in iotsensor
+- Once this component runs, 
+   - the swagger interface can be accessed via http://localhost:5003/swagger/index.html. Please notice that the port number can be different if than 5003, this is the port given in the docker-compose file.
+   - REST API can be called via http://localhost:5003/api/Entity/
+
 
 
 #### User Interfaces
@@ -247,54 +262,10 @@ const routes: Routes = [
       },
     ...
   ```
-  The upper given route structure is indeed pretty complext and for this application might be seen unnecessary, however, if you plan to extend it, it is great to see how a feature can be easily added here. All routes are listed in a single file. 
+  - The upper given route structure is indeed pretty complext and for this application might be seen unnecessary, however, if you plan to extend it, it is great to see how a feature can be easily added here. All routes are listed in a single file. 
+  - `npm start` or `ng serve` will directly build and run the web app if any issue appears, the app can be reached via localhost:4200
 
 #### Predictive Maintenance (TODO)
 
 An autonomous smart factory necessitates to detect the errorness or the possibility of having a failure at devices. The predictive maintenance service aims at aggregating the data from the sensors and predict whether the device behaves normal based on the historical data. This component will be added as a future work. 
 
-**Technical View**
-
-#### Common Class Library
-
-Some projects includes the repetitive codes, and this class library targets to eliminate this issue by designing a common architecture. In the current version it is integrated in the other modules. It is highly recommeded to read the common-api/README.md that indicates how to do this approach.
-
-## Docker-Compose Structure
-
-# How to run
-
-All project components are dockerized and docker-compose solves all dependency issues among the programs. To run the project, call simply the following commands:
-
-`docker-compose build`
-
-`docker-compose up`
-
-
-User interface:
-
-http://localhost:4200/
-
-Swagger interface
-
-http://localhost:5003/swagger/index.html
-
-Rest interface:
-
-http://localhost:5003/api/Entity/
-
-## Dotnet console commands for mac environment
-
-https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new
-
-dotnet new Console --framework net6.0
-dotnet new console -n subscriber
-dotnet build
-dotnet run
-dotnet restore
-dotnet update
-
-dotnet add package MongoDB.Driver
-dotnet add package MQTTnet --version 3.1.1
-dotnet add package serilog
-dotnet add package Newtonsoft.Json
-dotnet add package Serilog.Sinks.Console
