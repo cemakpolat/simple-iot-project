@@ -8,7 +8,7 @@
    1. MQTT Broker Configuration
    2. IoT Data Model Design
    3. Simulated IoT Sensor Implementation
-   4. IoT Service Implemetation 
+   4. IoT Service Implementation 
    5. Data Storing&Requesting Service 
    6. User Web Interface Implementation
    7. Predictive Maintenance Service Implementation (TODO)
