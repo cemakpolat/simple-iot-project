@@ -1,5 +1,19 @@
 # Creating a Simple IoT Project
 
+1. Quick Start
+2. Use Case
+3. System Architecture
+4. Required Technologies
+5. System Components
+   1. MQTT Broker Configuration
+   2. IoT Data Model Design
+   3. Simulated IoT Sensor Implementation
+   4. IoT Service Implemetation 
+   5. Data Storing&Requesting Service 
+   6. User Web Interface Implementation
+   7. Predictive Maintenance Service Implementation (TODO)
+6. Future Works
+
 ## Quick Start
 
 All project components are dockerized and docker-compose solves all dependency issues among them. To run the project, call simply the following commands:
@@ -11,6 +25,7 @@ All project components are dockerized and docker-compose solves all dependency i
 - User web interface: http://localhost:4200/
 - Swagger web interface: http://localhost:5003/swagger/index.html
 - Rest interface: http://localhost:5003/api/Entity/
+
 
 ## Use Case 
 
@@ -191,7 +206,7 @@ dotnet add package Swashbuckle.AspNetCore --version 5.6.3
 
 
 
-#### User Interfaces
+#### User Web Interface
 
 The visualization of the aggeregated data is mostly more satisfying for end users and the purpose of this component is exactly to focus on a web application that has only two views aimint at depicting the sensor data and showing the log messages. With these minor requirements a web project can be easily created by using any kind of javascript framework ranging from jquery, angular, vue to reactjs. In this application, the angular is selected and one of the complete dashboard example, namely, `coreui`https://coreui.io/angular/, is taken as a base for the development. The reason is to have a solid code structure that allows to extend the features if required. A free version of the coreui dashboard can be accessed via https://coreui.io/angular/demo/free/2.11.1/#/dashboard. 
 
