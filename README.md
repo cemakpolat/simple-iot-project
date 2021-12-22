@@ -178,17 +178,76 @@ dotnet add package Swashbuckle.AspNetCore --version 5.6.3
 
 #### User Interfaces
 
-An enduser application is offered to monitor the temperature sensor values and the log messages sent by the services. These interfaces are demonstrated below:
+The visualization of the aggeregated data is mostly more satisfying for end users and the purpose of this component is exactly to focus on a web application that has only two views aimint at depicting the sensor data and showing the log messages. With these minor requirements a web project can be easily created by using any kind of javascript framework ranging from jquery, angular, vue to reactjs. In this application, the angular is selected and one of the complete dashboard example, namely, `coreui`https://coreui.io/angular/, is taken as a base for the development. The reason is to have a solid code structure that allows to extend the features if required. A free version of the coreui dashboard can be accessed via https://coreui.io/angular/demo/free/2.11.1/#/dashboard. 
+
+ The implemented user interfaces are demonstrated below:
 
 ![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/sensor.png)
 
 ![alt text](https://github.com/cemakpolat/simple-iot-project/blob/master/docs/log.png)
 
 **Technical View**
+As mentioned above the app is constructed on the free vesion of (coreui/angular)[https://coreui.io/angular/] implemented via he angular framework. All additional subcomponents are removed to make a simplified code structure. 
+- The instruction of coreui angular template is already explained in https://github.com/coreui/coreui-free-angular-admin-template. By applying them, the web app can be easily executed and accessed via http://localhost:4200
+- Remove all unnecessary files: 
+- Install `ngx-mqtt` module required for interacting via MQTT
+- update mqtt configuration in app.module.ts 
+     - if it is not added automatically `import { IMqttMessage, MqttModule, IMqttServiceOptions } from "ngx-mqtt";`
+     - add mqtt configs and pass the config inside the ngmodule
 
-The app is constructed on the free vesion of (coreui/angular)[https://coreui.io/angular/] based on the angular framework. 
-- important files that should be explained for the clarification of the code structure
-- MQTT service over websocket
+```
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: 'localhost',
+  port: 9001,
+  path: '/mqtt'
+}
+
+@NgModule({
+  declarations: [AppComponent, ...APP_CONTAINERS],
+  imports: [
+  ...,
+   MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
+  ],
+  providers: [
+```
+- create a service that observes mqtt topics and inform an angular component when its message comes, `../app/services/event.mqtt.service.ts `
+- create two components:1 )sensor/device data visualization
+   - views/device
+      - consumes EventMQTTService, parses incoming json data and update the chartjs line graph
+   - views/logs
+      - consumes EventMQTTService, parses incoming json data and update the log data table.
+- update app/containers/default-layout/_nav.ts to access the modules on the navigation panel.
+```
+ {
+    name: 'Devices',
+    url: '/devices',
+    iconComponent: { name: 'cil-layers' }
+  },
+  ...
+  ```
+- update the app-routing.module.ts to load the app components. The `default` selected module is `devices` component. 
+```
+const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'devices',
+    pathMatch: 'full'
+  },
+  {
+    path: '',
+    component: DefaultLayoutComponent,
+    data: {
+      title: 'Home'
+    },
+    children: [
+      {
+        path: 'devices',
+        loadChildren: () =>
+          import('./views/devices/devices.module').then((m) => m.DevicesModule)
+      },
+    ...
+  ```
+  The upper given route structure is indeed pretty complext and for this application might be seen unnecessary, however, if you plan to extend it, it is great to see how a feature can be easily added here. All routes are listed in a single file. 
 
 #### Predictive Maintenance (TODO)
 
