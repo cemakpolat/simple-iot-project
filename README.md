@@ -1,5 +1,6 @@
 # Creating a Simple IoT Project
 
+Important!: Before reading the rest of the content, you may also look at the medium article https://akpolatcem.medium.com/creating-a-simple-iot-project-590342f6f904.
 1. Quick Start
 2. Use Case
 3. System Architecture
