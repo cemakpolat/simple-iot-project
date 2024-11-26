@@ -1,10 +1,6 @@
 {
-  "name": "dashboard",
-  "version": "4.0.0-alpha.3",
-  "config": {
-    "coreui_library_short_version": "4.0",
-    "coreui_library_docs_url": "https://coreui.io/angular/docs/"
-  },
+  "name": "sf-dashboard",
+  "version": "1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { EventMqttService } from '../../services/event.mqtt.service';
 import { IMqttMessage } from "ngx-mqtt";
+
 
 @Component({
   templateUrl: 'devices.component.html',

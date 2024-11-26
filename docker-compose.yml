@@ -1,12 +1,16 @@
-version: '3.4'
-
 services:
   broker:
-    image: toke/mosquitto
+    image: eclipse-mosquitto
     ports:
       - 1883:1883
       - 8883:8883
       - 9001:9001
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    networks:
+      - iot_network
 
   mongodb:
     image: mongo
@@ -19,6 +23,8 @@ services:
       - '27017-27019:27017-27019'
     volumes:
       - ./mongo-settings/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - iot_network
 
   datastore:
     image: datastore
@@ -36,7 +42,9 @@ services:
     depends_on:
       - mongodb
       - broker
-  
+    networks:
+      - iot_network
+
   sensor:
     image: iotsensor
     build:
@@ -44,7 +52,9 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - broker
-  
+    networks:
+      - iot_network
+
   iotservice:
     image: iotservice
     build:
@@ -52,6 +62,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - broker
+    networks:
+      - iot_network
 
   web:
     image: dashboard
@@ -62,6 +74,8 @@ services:
       - broker
     ports:
       - 4200:80
+    networks:
+      - iot_network
  
   pmengine:
     image: pmengine
@@ -70,3 +84,13 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - broker
+    networks:
+      - iot_network
+
+networks:
+  iot_network:
+    driver: bridge
+
+volumes:
+  mosquitto_data:
+  mosquitto_log:
