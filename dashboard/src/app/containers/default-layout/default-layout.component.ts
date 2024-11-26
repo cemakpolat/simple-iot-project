@@ -6,6 +6,7 @@ import { navItems } from './_nav';
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
 })
+
 export class DefaultLayoutComponent {
 
   public navItems = navItems;

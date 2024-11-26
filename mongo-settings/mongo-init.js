@@ -1,4 +1,4 @@
-﻿db.createUser(
+db.createUser(
     {
         user: "root",
         pwd: "universe",

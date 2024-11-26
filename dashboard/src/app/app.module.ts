@@ -7,7 +7,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
-  PerfectScrollbarModule,
 } from 'ngx-perfect-scrollbar';
 //
 import { IMqttMessage, MqttModule, IMqttServiceOptions } from "ngx-mqtt";
@@ -77,7 +76,6 @@ const APP_CONTAINERS = [
     HeaderModule,
     SidebarModule,
     IconModule,
-    PerfectScrollbarModule,
     NavModule,
     ButtonModule,
     FormModule,
