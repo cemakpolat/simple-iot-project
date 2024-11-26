@@ -1,20 +1,20 @@
 <!--sidebar-->
-<c-sidebar
-  #sidebar="cSidebar"
-  class="d-print-none sidebar sidebar-fixed"
-  id="sidebar"
-  visible
->
-<c-sidebar-brand> <h4>Smart Factory</h4></c-sidebar-brand>
-  <perfect-scrollbar [config]="perfectScrollbarConfig">
-      <c-sidebar-nav [navItems]="navItems"></c-sidebar-nav>
-  </perfect-scrollbar>
+<c-sidebar visible unfoldable="true" #sidebar1="cSidebar" class="d-print-none sidebar sidebar-fixed">
+  <c-sidebar-header class="border-bottom" colorScheme="">
+    <c-sidebar-brand>SFactory</c-sidebar-brand>
+  </c-sidebar-header>
+  <c-sidebar-nav [navItems]="navItems" />
+  <c-sidebar-footer cSidebarToggle="sidebar1" class="border-top" toggle="unfoldable" style="cursor: pointer;">
+    <button cSidebarToggler></button>
+  </c-sidebar-footer>
+
 </c-sidebar>
+
 
 <!--main-->
 <div class="wrapper d-flex flex-column min-vh-100 bg-light dark:bg-transparent">
   <!--app-header-->
-  <app-default-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="sidebar"></app-default-header>
+  <app-default-header class="mb-4 d-print-none header header-sticky" position="sticky" sidebarId="cSidebar"></app-default-header>
   <!--app-body-->
   <div class="body flex-grow-1 px-3">
     <c-container breakpoint="lg" class="h-auto">
